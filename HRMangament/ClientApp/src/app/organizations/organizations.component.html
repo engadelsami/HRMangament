@@ -1,0 +1,67 @@
+<form class="needs-validation" novalidate [formGroup]="formValue">
+    <div>
+        <div class="form-row">
+            <div class="col-md-2 mb-3">
+                <label for="validationTooltip01">Organization name</label>
+                <input type="text" class="form-control" formControlName="OrganizationName" id="validationTooltip01" placeholder="Organization name" required>
+                <div class="valid-tooltip">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-2 mb-3">
+                <label for="validationTooltip02">Sub start date</label>
+                <input type="text" class="form-control" formControlName="subscribtionStartDate" id="validationTooltip02" placeholder="Sub start date" required>
+                <div class="valid-tooltip">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-2 mb-3">
+                <label for="validationTooltip03">Sub End date</label>
+                <input type="text" class="form-control" formControlName="subscribtionEndDate" id="validationTooltip03" placeholder="Sub End date" required>
+                <div class="invalid-tooltip">
+                    Please provide a valid city.
+                </div>
+            </div>
+            <div class="col-md-2 mb-3">
+                <label for="validationTooltip04">Max employee num</label>
+                <input type="text" class="form-control" formControlName="MaxEmployeesNumber" id="validationTooltip04" placeholder="Max employee num" required>
+                <div class="invalid-tooltip">
+                    Please provide a valid state.
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 " id="Buttons">
+                <div class="innerbtndiv">
+                    <button class="btn btn-primary" id="Add" *ngIf="showAdd" (click)="doaddorganization()">Add</button>
+                    <button class="btn btn-success" id="Add" *ngIf="showUpdate" (click)="doEditOrganization()">Update</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">sub Start Date</th>
+            <th scope="col">sub End Date</th>
+            <th scope="col">max Employees Num</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let organization of organizations">
+            <td scope="row">{{organization.organizationId}}</td>
+            <td scope="row">{{organization.organizationName}}</td>
+            <td scope="row">{{organization.subscribtionStartDate}}</td>
+            <td scope="row">{{organization.subscribtionEndDate}}</td>
+            <td scope="row">{{organization.maxEmployeesNumber}}</td>
+            <td scope="row"><button class="btn btn-danger" id="Delete" (click)="dodeleteorganization(organization.organizationId)">Delete</button></td>
+            <td scope="row"><button class="btn btn-secondary" id="Edit" (click)="onEdit(organization)">Edit</button></td>
+        </tr>
+    </tbody>
+</table>
