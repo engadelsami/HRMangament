@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace HRMangament
 {
@@ -110,6 +111,23 @@ namespace HRMangament
             services.AddScoped<IGetUserById, GetUserById>();
 
             //-----------------------------------------------------------------------
+
+            services.AddCors(o => o.AddPolicy("ManagementPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Tachy E2E System - Management HTTP API",
+                    Version = "v1",
+                    Description = "The Management Microservice HTTP API"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -139,11 +157,14 @@ namespace HRMangament
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+
+            app.UseSwagger().UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
             app.UseSpa(spa =>
             {

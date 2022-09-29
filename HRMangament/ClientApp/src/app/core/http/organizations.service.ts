@@ -27,12 +27,19 @@ export class OrganizationsService {
   deleteorganization(data :any)
   {
     console.log("data",data);
-     return this.http.delete(`${env.apiroot}/Organizations/DeleteOrganization/`,data);
+     return this.http.delete(`${env.apiroot}/Organizations/DeleteOrganization?organizationId=${data}`);
   }
+
+  getOrganizationById(data :any)
+  {
+    console.log("data",data);
+    return this.http.get(`${env.apiroot}/Organizations/GetOrganizationById?organizationId=${data}`);
+  }
+
 
   editorganization(data :any)
   {
     console.log("data",data);
-     return this.http.put(`${env.apiroot}/Organizations/UpdateOrganization/`,data);
+     return this.http.put(`${env.apiroot}/Organizations/UpdateOrganization`,data);
   }
 }

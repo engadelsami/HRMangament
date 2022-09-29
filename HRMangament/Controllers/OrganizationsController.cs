@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace HRMangament.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class OrganizationsController: ControllerBase
     {
         private readonly IGetOrganizations      _getOrganizations;
@@ -26,36 +27,35 @@ namespace HRMangament.Controllers
             _updateOrganization = updateOrganization;
             _getOrganizationById = getOrganizationById;
         }
-        [HttpGet]
+
+        [HttpGet("GetOrganization")]
         public IActionResult GetOrganization()
         {
             return new JsonResult(_getOrganizations.Excute());
         }
-        [HttpGet]
+
+        [HttpGet("GetOrganizationById")]
         public IActionResult GetOrganizationById( int organizationId)
         {
             return new JsonResult(_getOrganizationById.Excute(organizationId));
         }
 
-        [HttpPost]
-        [Route("AddOrganization")]
+        [HttpPost("AddOrganization")]
         public IActionResult AddOrganization([FromBody] AddOrganizationCommand organization)
         {
             _addOrganization.Excute(organization);
             return Ok();
         }
-        [HttpDelete]
-        [Route("AddOrganization")]
 
+        [HttpDelete("DeleteOrganization")]
         public IActionResult DeleteOrganization( int organizationId)
         {
             _deleteOrganization.Excute(organizationId);
             return Ok();
         }
-        [Route("AddOrganization")]
 
-
-        public IActionResult UpdateOrganization( UpdateOrganizationCommand organization)
+        [HttpPut("UpdateOrganization")]
+        public IActionResult UpdateOrganization([FromBody] UpdateOrganizationCommand organization)
         {
             _updateOrganization.Excute(organization);
             return Ok();
